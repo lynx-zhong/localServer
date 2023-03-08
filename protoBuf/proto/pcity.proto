@@ -1,0 +1,276 @@
+syntax = "proto3";
+package proto;
+import "puser.proto";
+
+//GetCityinfoReq 查询城市信息
+message RequestCityinfoReq {
+  //Fkcitycode 城市
+  string Fkcitycode = 1;
+}
+
+//FindCityleaderinfoRsp 查询城市信息
+message RequestCityinfoRsp {
+  //Cityid 城市
+  string Fkcitycode = 1;
+  //Cityname 城市名字
+  string Cityname = 2;
+  //Citylevel 城市等级
+  int32 Citylevel = 4;
+  //Citybuilder 创建者
+  string Citybuilderid = 5;
+  //Cityopentime 城市创建时间
+  string Cityopentime = 6;
+  //Cityascription 城市归属地(国家)
+  string Cityascription = 7;
+  //Ctiyleader 城市领导者
+  string Ctiyleaderid = 8;
+  //Cityprosperity 城市繁荣度
+  int64 Cityprosperity = 9;
+  //城市大小
+  int64 CityWidth = 10;
+  int64 CityLength = 11;
+  //每个地块大小
+  float EachLandSize = 12;
+  bool CityDirection = 3;
+}
+
+
+//FindCitylistReq 获取城市列表
+message RequestCitylistReq{
+  //世界地图坐标范围
+  int64 minxyscope = 1;
+  int64 maxxyscope = 2;
+}
+
+
+//FindCitylistRsp 城市列表类
+message RequestCityinfotype{
+  //Fkcitycode 城市id
+  string Fkcitycode = 1;
+  //Fkcityname 城市名称
+  string Fkcityname = 2;
+  //Cityascription 城市归属地
+  string Cityascription = 3;
+  //Citylocation 城市坐标XY轴
+  int64 Citylocationx = 4;
+  //Citylocation 城市坐标XY轴
+  int64 Citylocationy = 5;
+  //城市大小
+  int64 CityWidth = 6;
+  int64 CityLength = 7;
+  //每个地块大小
+  float EachLandSize = 8;
+  bool CityDirection = 9;
+}
+
+//FindCitylistRsplist 返回城市列表list
+message RequestCitylistRsp{
+  //rsplist 城市list
+  repeated RequestCityinfotype rsplist = 1;
+}
+
+
+message PBuildinginfo {
+  // 建筑Uuid
+  int64 Uuid = 1;
+  //BuildingCode 建筑数值
+  int64 BuildingCode = 2;
+  //BuildingTowards 建筑朝向
+  int64 Towards = 3;
+  //IsTrueBuilding 是否是真正的建筑
+  bool IsTrueBuilding = 4;
+}
+
+//LineUserinfo 该条线上用户信息
+message PLineUserinfo{
+  string Fkuuid = 1;
+  //Xaxis X坐标或下标
+  int64 Xaxis = 2;
+  //Yaxis Y坐标或下标
+  int64 Yaxis = 3;
+  //Direction 行走方向
+  bool Direction = 4;
+  //Orientations 朝向
+  int64 Orientations = 5;
+  //RemainNum 剩余步数
+  int64 RemainNum = 6;
+  //Fktransportid 使用的交通ID
+  int64 Fktransportid = 8;
+  //GiveUpReclama 允许购买状态
+  bool GiveUpReclama  = 7;
+}
+//LinePropinfo  该条线上道具信息
+message PLinePropinfo{
+  //Proptype 道具id
+  int64 Proptype = 1;
+  //Propstatus 道具状态
+  int64 Propstatus = 2;
+  //Propendtime 倒计时
+  int64 Propendtime = 3;
+}
+
+message PBuildinginfolist{
+  repeated PBuildinginfo Buildinginfo = 1;
+}
+
+//RequestCityMapData 地图层Req
+message RequestCityMapDataReq{
+  //Fkcitycode 城市
+  string Fkcitycode = 1;
+}
+
+
+//MapDataHierarchyRsp 地图层次数据
+message RequestCityMapDataRsp{
+  //城市大小
+  int64 CityWidth = 6;
+  int64 CityLength = 7;
+  //每个地块大小
+  float EachLandSize = 8;
+  bool CityDirection = 9;
+  repeated PPlotsbuyed Plotsbuyed = 1;
+  repeated PBuildinginfolist BuildingBaseinfo = 2;
+  PLineUserinfo lineuserinfo = 3;
+  repeated PLinePropinfo linepropinfo = 4;
+}
+
+//Plotsbuyed 已购买地块信息
+message PPlotsbuyed{
+  //Fkcitycode 城市Code
+  string Fkcitycode = 2;
+  //FkThirdLanduuid 地块唯一标识
+  string FkThirdLanduuid = 3;
+  //Fkuuid 购买用户
+  string Fkuuid = 4;
+  //Xaxis X坐标或下标
+  int64 Xaxis = 5;
+  //Yaxis Y坐标或下标
+  int64 Yaxis = 6;
+  //buydate 购买时间
+  string Buydate = 7;
+  //Name 用户名
+  string Name = 8;
+}
+
+//GoWalkReq 行走请求
+message RequestGoWalkReq{
+  string Fkcitycode =1;
+  string Fkuuid =2;
+  //行走步数
+  int64  Walkused=3;
+}
+
+//GoWalkRsp 行走返回
+message RequestGoWalkRsp{
+  string Fkuuid = 1;
+  int64  Xaxis =2;
+  int64  Yaxis =3;
+  //Direction 行走方向
+  bool Direction = 4;
+  //Orientations 朝向
+  int64 Orientations = 5;
+  //RemainNum 剩余步数
+  int64 RemainNum = 6;
+}
+
+//Walkverify 验证行走
+message RequestWalkVerifyReq{
+  string Fkuuid = 1;
+  int64  Xaxis =2;
+  int64  Yaxis =3;
+  //Direction 行走方向
+  bool Direction = 4;
+  //Orientations 朝向
+  int64 Orientations = 5;
+  //当前这一步行走剩余步数
+  int64  Walkused = 6;
+}
+
+//行走成功消息队列返回
+message RequestWalkVerifySuccRsp{
+  string FkCityCode = 6;
+  string Fkuuid = 1;
+  int64  Xaxis =2;
+  int64  Yaxis =3;
+  bool Direction =4;
+  int64 Orientations = 5;
+  int64 Fktransportid = 7;
+  bool Turn = 8;
+}
+
+message RequestWalkVerifyErrRsp{
+  string Fkuuid = 1;
+  int64 BackIndex = 2;
+}
+
+
+
+//重新获取玩家路线
+message RequestWalkWayReq{
+  string Fkuuid = 1;
+}
+
+//重新获取玩家路线
+message RequestWalkWayRsp{
+  repeated RequestWaydata Waydat = 1;
+}
+
+
+//购买地块Req
+message RequestReclamationReq{
+  string Fkuuid = 1;
+  string FkCityCode = 2;
+  int64 LandXaxis = 3;
+  int64 LandYaxis = 4;
+}
+
+//
+message RequestReclamationRsp{
+  bool ReqSucc = 1;
+  string Fkuuid = 2;
+}
+
+//地块购买成功广播
+message RequestReclamationSuccRsp{
+  PPlotsbuyed PPlotsbuyed = 1;
+}
+
+
+//获取其他玩家的位置和皮肤
+message RequestLineofUserPositionReq{
+  string Fkcitycode = 1;
+}
+
+//其他玩家的位置和皮肤回复
+message RequestLineofUserPositionRsp{
+  //离线玩家
+  repeated PositionRoleInfo offLineuuid = 1;
+  //线路上含有/新增玩家
+  repeated PositionRoleInfo lineuserinfo = 3;
+}
+
+message PositionRoleInfo{
+  string Fkuuid = 1;
+  string Name = 7;
+  //Xaxis X坐标或下标
+  int64 Xaxis = 2;
+  //Yaxis Y坐标或下标
+  int64 Yaxis = 3;
+  //Direction 行走方向
+  bool Direction = 4;
+  //Orientations 朝向
+  int64 Orientations = 5;
+  //Extra 保存用户相关信息
+  string Extra = 6;
+}
+
+//放弃此回合开垦机会
+message RequestGiveUpReclamationReq{
+  string Fkuuid = 1;
+  string Fkcitycode = 2;
+}
+
+
+message RequestGiveUpReclamationRsp{
+  bool UpSucc = 1;
+}

@@ -1,0 +1,251 @@
+//protoc --go_out=. test.proto
+
+syntax = "proto3";
+
+package proto;
+
+import "pcity.proto";
+
+message PShareHolderInfo {
+    //Userid 用户
+    string Userid = 1;
+    //RoleName 角色昵称
+    string RoleName = 2;
+    //OwnShares 股份
+    float OwnShares = 3;
+    //Investment 投资额
+    int64 Investment = 4;
+    //AccumulatedIncome 累计收益
+    int64 AccumulatedIncome = 5;
+}
+
+message PBuildingIncome {
+    //Date 日期
+    string Date = 1;
+    //TotalIncome 总收益
+    int64 TotalIncome = 2;
+    //MostPopularCommodityId 最受欢迎商品id
+    int64 MostPopularCommodityId = 3;
+    //MostPopularCommodityNum 最受欢迎商品售出数量
+    int64 MostPopularCommodityNum = 4;
+    //MostPopularIncome 最受欢迎收益
+    int64 MostPopularIncome = 5;
+}
+
+//RequestAddBuildingReq 新增建筑
+message RequestAddBuildingReq {
+    // BuildingCode 建筑code
+    int64 BuildingCode = 4;
+    //LocationX 建筑x坐标
+    int64 LocationX = 6;
+    //LocationY 建筑y坐标
+    int64 LocationY = 7;
+    //Towards 建筑朝向
+    int64 Towards = 8;
+}
+
+//RequestAddBuildingRsp 新增建筑是否成功
+message RequestAddBuildingRsp {
+    PBuildinginfo Baseinfo = 1;
+}
+
+//RequestGetBuildingReq 获取建筑详细信息
+message RequestGetBuildingReq {
+    //Uuid 建筑Uuid
+    int64 Uuid = 1;
+}
+
+//RequestGetBuildingRsp 建筑详细信息
+message RequestGetBuildingRsp {
+    //BuildingCode 建筑code
+    int64 BuildingCode = 1;
+    //Investment 建筑总投资额
+    int64 Investment = 2;
+    //YesterdayIncome 建筑昨日收益
+    int64 YesterdayIncome = 3;
+    //YesterdaySubsidy 建筑昨日补贴
+    int64 YesterdaySubsidy = 4;
+    //AwaitTime 操作等待时间
+    int64 AwaitTime = 5;
+    //LargestShareholder 此建筑最大股东
+    string LargestShareholder = 6;
+}
+
+// 价格类型和值
+message PPrice {
+    // 货币类型
+    int64 PriceType = 1;
+    // 费用
+    int64 Price = 2;
+}
+
+//RequestInvestmentBuildingReq 建筑投资
+message RequestInvestBuildingReq {
+    //Uuid 建筑Uuid
+    int64 Uuid = 1;
+    //Invest 投资额度
+    repeated PPrice Invest = 4;
+}
+
+//RequestInvestBuildingRsp 建筑投资
+message RequestInvestBuildingRsp {
+    //TotalInvestment 总投资额
+    int64 TotalInvestment = 1;
+    //Investment 此用户投资额
+    int64 Investment = 2;
+}
+
+//RequestChangeBuildingReq 建筑更改
+message RequestChangeBuildingReq {
+    //Id 建筑Uuid
+    int64 Uuid = 1;
+    //AfterBuildingCode 新类型
+    int64 AfterBuildingCode = 3;
+    //NFTSkin 建筑皮肤
+    string Skin = 4;
+}
+
+//RequestChangeBuildingRsp 建筑更改
+message RequestChangeBuildingRsp {
+    // 建筑更改是否成功
+    bool Status = 1;
+}
+
+//RequestConsumeBuildingReq 建筑消费请求
+message RequestConsumeBuildingReq {
+    //Uuid 建筑Uuid
+    int64 Uuid = 2;
+    //ShopId 货物架id
+    int64 ShopId = 3;
+}
+
+message RequestConsumeBuildingRsp {
+    // 是否消费成功
+    bool Status = 1;
+}
+
+//RequestInvestmentRankingBuildingReq 建筑投资排行榜
+message RequestInvestmentRankingBuildingReq {
+    // 建筑Uuid
+    int64 Uuid = 1;
+    //Page
+    int64 Page = 2;
+    //Limit
+    int64 Limit = 3;
+}
+
+//RequestInvestmentRankingBuildingRsp 建筑投资排行榜
+message RequestInvestmentRankingBuildingRsp {
+    //建筑投资清单
+    repeated PShareHolderInfo List = 1;
+    //此用户投资情况
+    PShareHolderInfo UserInvestmentInfo = 2;
+    //Total 总数
+    int64 Total = 3;
+    repeated PBuildingIncome BuildingIncome = 4;
+}
+
+//RequestFindBuildingWorkReq 查看建筑打工位
+message RequestFindBuildingWorkReq {
+    // 建筑唯一Uuid
+    int64 Uuid = 1;
+}
+
+//PBuildingWork 建筑打工位信息
+message PBuildingWork {
+    //WorkId 工号id
+    int64 WorkId = 1;
+    //Userid 打工人
+    string Userid = 2;
+    //RoleName 角色名称
+    string RoleName = 3;
+    //WorkType 工位类型（1好友打工位 2普通打工位）
+    int64 WorkType = 4;
+    //WorkStartTime 打工开始时间
+    string WorkStartTime = 5;
+    //WorkStartBuildingCode 打工开始时建筑code
+    int64 WorkStartBuildingCode = 6;
+    //WorkEndTime 打工结束时间
+    int64 WorkEndTime = 7;
+}
+
+//RequestFindBuildingWorkRsp 建筑打工位
+message RequestFindBuildingWorkRsp {
+    repeated PBuildingWork Work = 1;
+}
+
+//RequestWorkInBuildingReq 建筑打工
+message RequestWorkInBuildingReq {
+    //Uuid 建筑Uuid
+    int64 Uuid = 2;
+    //WorkId 工号id
+    int64 WorkId = 3;
+    //Status 状态 0开始打工 1结束打工
+    int64 Status = 4;
+}
+
+message RequestWorkInBuildingRsp {
+    //UserIncome 玩家收益(手动结束打工结算)
+    int64 UserIncome = 1;
+    // 打工信息
+    repeated PBuildingWork Work = 2;
+}
+
+// 升级
+message RequestBuildingUpgradeRsp {
+    //FkCityCode 城市code
+    string FkCityCode = 1;
+    // 建筑Uuid
+    int64 Uuid = 2;
+    //BuildingCode 建筑code
+    int64 BuildingCode = 3;
+    //LocationX 建筑x坐标
+    int64 LocationX = 4;
+    //LocationY 建筑y坐标
+    int64 LocationY = 5;
+}
+
+// 添加建筑广播
+message RequestBuildingInitSuccRsp {
+    //FkCityCode 所属城市
+    string FkCityCode = 1;
+    // 建筑Uuid
+    int64 Uuid = 2;
+    //Userid 建造者id
+    string Userid = 3;
+    // BuildingCode 建筑id
+    int64 BuildingCode = 4;
+    //LocationX 建筑x坐标
+    int64 LocationX = 6;
+    //LocationY 建筑y坐标
+    int64 LocationY = 7;
+    //Towards 建筑朝向
+    int64 Towards = 8;
+}
+
+// 更改建筑类型成功广播
+message RequestBuildingChangeTypeRsp {
+    //FkCityCode 所属城市
+    string FkCityCode = 1;
+    // 建筑Uuid
+    int64 Uuid = 2;
+    //Userid 此建筑最大股东
+    string Userid = 3;
+    // AfterBuildingCode 建筑code
+    int64 AfterBuildingCode = 4;
+    //LocationX 建筑x坐标
+    int64 LocationX = 6;
+    //LocationY 建筑y坐标
+    int64 LocationY = 7;
+}
+
+message RequestBuildingUserWorkRes {
+    // 用户
+    string Userid = 1;
+    // 建筑id
+    int64 Uuid = 2;
+    // 收益
+    int64 UserIncome = 3;
+    // 状态（0开始打工 1结束打工）
+    int64 Status = 4;
+}

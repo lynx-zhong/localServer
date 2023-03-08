@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace localServer
 {
-    internal class Luach
+    internal class Launch
     {
         static void Main(string[] args)
         {

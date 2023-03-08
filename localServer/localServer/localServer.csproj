@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.5.1" />
+    <PackageReference Include="Google.Protobuf.Tools" Version="3.5.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="proto-gen-csharp\" />
   </ItemGroup>
 
 </Project>

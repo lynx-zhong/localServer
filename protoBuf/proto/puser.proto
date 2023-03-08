@@ -1,0 +1,254 @@
+syntax="proto3"; //版本号
+
+package proto;  //包名
+
+//RequestCreateRoleReq 创建角色信息
+message RequestCreateRoleReq {
+  	//Fkcitycode 所属城市code
+	string Fkcitycode=1;
+	//Fkcityname 所属城市名字
+	string Fkcityname=2;
+	//Extra 保存用户相关信息, 例如3d外观
+	string Extra=3;
+	//Name 名字
+	string Name=4;
+	//Sex 性别
+	int32 Sex=5;
+}
+
+
+//RequestUpdateRoleReq 更新角色信息
+message RequestUpdateRoleReq {
+	//Fkcitycode 所属城市code
+	string Fkcitycode=1;
+	//Fkcityname 所属城市名字
+	string Fkcityname=2;
+	//Extra 保存用户相关信息, 例如3d外观
+	string Extra=3;
+	//Name 名字
+	string Name=4;
+	//Sex 性别
+	int32 Sex=5;
+}
+
+
+//PTrasnportDice 交通工具骰子
+message PTrasnportDice {
+	//Direction 不需要数据库
+	int64 Direction=1;
+	//Number 不需要数据库
+	int64 Number=2;
+	//Used 不需要数据库
+	bool Used=3;
+	//Id 不需要数据库
+	int64 Id=4;
+}	
+
+//RequestFindransportInfo 用户交通工具信息
+message RequestFindransportInfo {
+	//Fktransportid 交通工具id
+	int64 Fktransportid=3;
+	//Dices 骰子定义
+	repeated PTrasnportDice Dices=4;
+	//Timeout 过期时间
+	int64 Timeout=5;
+}
+
+//RequestFindransportRsp 用户交通工具信息
+message RequestFindransportRsp {
+	//List 户交通工具列表
+	repeated RequestFindransportInfo List =1;
+	// 用户默认交通工具id
+	int64 DefaultId=2;
+}
+
+//RequestAddTransportReq 购买用户添加交通工具
+message RequestAddTransportReq {
+	//Fkusertransportsid 交通工具ID
+	int64 Fkusertransportsid=1;
+}
+
+//属性定义可以参考 RequestGetRoleRsp 两者的字段名是通用的
+message RoleAttributeChange {
+	// Nutrition   营养
+	// Moisture    水分
+	// Happy       快乐
+	// Vigor       精力
+	// Level       级别
+	// Experinces  经验
+	// Diamond     钻石
+	// Gold        金币
+	
+	//Type 类型
+	string Type=1;
+	//Value 数量
+	int64 Value=2;
+}
+
+// 属性变更推送 1004
+message ServerToClientgetRoleInfoRes {
+	bool IsDying =2;
+	repeated RoleStatusType  exceptionCode=4;
+	repeated RoleAttributeChange Changeitem=1;
+}
+enum RoleStatusType {
+	StatusZero=0;
+	PreliminarySaccharification= 7011;  //初阶饥饿异常，无影响
+	MediumSaccharification= 7012;  //中阶饥饿异常，无法使用交通工具
+	HighSaccharification= 7013;  //高阶饥饿异常，包含以上所有效果，并且无法扩展森林
+	
+	PreliminaryDehydration= 7021;  //初阶口渴异常，无影响
+	MediumDehydration= 7022;  //中阶口渴异常，移动过程中概率出现停留\
+	HighDehydration= 7023;  //高阶口渴异常，包含以上所有效果，并且无法扩展荒漠；
+	
+	PreliminarySoftening= 7031;  //初阶疲惫异常，无影响
+	MediumSoftening= 7032;  //中阶疲惫异常，移动上限减少，单次可移动上限不再是6
+	HighSoftening= 7033;  //高阶疲惫异常，包含以上所有效果，并且无法扩展水域；
+	
+	PreliminarySalinization= 7041;  //初阶焦虑异常，无影响
+	MediumSalinization= 7042;  //中阶焦虑异常，中阶异常，无法进行投资；
+	HighSalinization= 7043;  //高阶焦虑异常，包含以上所有效果，并且无法扩展山地；
+
+	DyingSaccharification= 10000;  //饥饿濒死
+	DyingDehydration= 10001;  //口渴濒死
+	DyingSoftening= 10002;  //疲惫濒死
+	DyingSalinization= 10003;  //焦虑濒死
+}
+
+//RequestGetRoleRsp 用户角色获取信息
+message RequestGetRoleRsp {
+	//Fkcitycode 所属城市code
+	string Fkcitycode=1;
+	//Fkcityname 所属城市名字
+	string Fkcityname=2;
+	//Fkbirthcitycode 出生城市code
+	string Fkbirthcitycode=3;
+	//Fkbirthcityname 出生城市名字
+	string Fkbirthcityname=4;
+	//Status 状态??
+	repeated int64 Status=6;
+	//Extra 保存用户相关信息
+	string Extra=5;
+	//Level 级别
+	int64 Level=7;
+	//Experinces 经验
+	int64 Experinces=8;
+	//Vigor 精力
+	int64 Vigor=9;
+	//Moisture 水分
+	int64 Moisture=10;
+	//Nutrition  营养
+	int64 Nutrition =11;
+	//Happy  快乐
+	int64 Happy =12;
+	//Createdat 创建时间
+	string Createdat=13;
+	//Name 名字
+	string Name=14;
+	//Sex 性别
+	int64 Sex=15;
+	//Diamond 钻石
+	int64 Diamond=17;
+	//Gold 金币
+	int64 Gold=18;
+	//Fkuuid 用户ID
+	string Fkuuid=19;
+	// 犯罪值
+	int64 Criminal=20;
+	// 拘留时间
+	int64 PunishmentTime=21;
+	// 玩家打工的建筑Uuid  如果为0则表示玩家未在打工
+	int64 WorkingUuid = 22;
+	// 收益
+	int64 WorkingIncome = 23;
+	// 玩家今日的打工总时长 秒数
+	int64 WorkTotalTime = 24;
+}
+//WalletInfo 用户钱包信息
+message WalletInfoRes {
+	//Fkuuid 用户ID
+	string Fkuuid=2;	
+	//Diamond 钻石
+	int64 Diamond=3;
+	//Gold 金币
+	int64 Gold=4;
+}
+//RareInfo 用户稀土信息
+message RareInfo {
+	//Rare 稀土数量
+	int64 Rare=1;
+}
+// //RequestGetRoleRsp 用户角色获取信息
+// message GetRoleAndWalletRsp {
+// 	RequestGetRoleRsp UserRole=1;
+// 	WalletInfoRes UserWallet=2;
+// }
+
+//RequestMoveRoleReq 移动
+message RequestMoveRoleReq {
+	//Dice 使用的骰子
+	int64 Diceid =1;
+	//Fktransportid 交通工具id
+	int64 Fktransportid=2;
+}
+
+message RequestMoveRoleRsp {
+	//MoveNumber  移动步数
+	int64 MoveNumber = 1;
+	repeated RequestWaydata waydat = 2;
+	// 是否刷新骰子
+	bool Refresh =3;
+	// 新的骰子数据
+	repeated PTrasnportDice Dices=4;
+}
+
+message RequestWaydata {
+	int64 Xaxis = 2;
+	//Yaxis Y坐标或下标
+	int64 Yaxis = 3;
+	//Direction 行走方向
+	bool Direction = 4;
+	//Orientations 朝向
+	int64 Orientations = 5;
+}
+
+
+//RequestRefreshDiceReq 刷新交通工具骰子
+message RequestRefreshDiceReq {
+	//Fktransportid 交通工具id
+	int64 Fktransportid=1;
+}
+
+
+//RequestWalletInfoRsp 用户钱包信息
+message RequestWalletInfoRsp {
+	//Fkuuid 用户ID
+	string Fkuuid=1;	
+	//Diamond 钻石
+	int64 Diamond=2;
+	//Gold 金币
+	int64 Gold=3;
+	//Updatedat 修改时间
+	string Updatedat=4;
+}
+
+//ChangeGoldReq 金币变动请求
+// 执行gm指令
+message ChangeGoldReq {
+	//Fkuuid 用户ID
+	string Fkuuid=1;
+	//Reason 变动原因
+	string Reason=2;
+	//Amount 变动数量
+	int64 Amount=3;
+} 
+//ChangeDiamondReq 钻石变动请求
+// 执行gm指令
+message ChangeDiamondReq {
+	//Fkuuid 用户ID
+	string Fkuuid=1;
+	//Reason 变动原因
+	string Reason=2;
+	//Amount 变动数量
+	int64 Amount=3;
+} 

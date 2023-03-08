@@ -1,0 +1,150 @@
+//protoc --go_out=. --micro_out=. test.proto
+
+syntax = "proto3";
+
+package proto;
+
+message UserCriminalOperte {
+	string Fkuuid = 1;
+	int64 Criminal=2;
+	string Fkcitycode=3;
+}
+// 通过id查询
+message IdQuery {
+	string Fkuuid = 1;
+	string Fkcitycode=2;
+}
+// 拘留结束
+message RequestEndOfDetentionRes {
+}
+message UserCriminalrole {
+	// 基本属性
+	int64 Id=1;
+	string Fkuuid=2;
+	string Name=24;
+	int64 Sex=26;
+	string Fkcitycode=3;
+	string Fkcityname=4;
+	string Fkbirthcitycode=5;
+	string Fkbirthcityname=6;
+	// 犯罪信息
+	int64 Criminal=7;
+	// 犯罪类型
+	int64 MaxCriminal=8;
+	// 犯罪类型得犯罪值
+	int64 MaxCriminalVlue=9;
+	// 犯罪星级
+	int64 Star=10;
+	// 拘留时间
+	int64 PunishmentTime=11;
+	// 罚款
+	int64 PunishmentPrice=12;
+	int64 Status=25;
+	string Extra=14;
+	string Createdat=22;
+	string Updatedat=23;
+}
+
+// 警察信息
+message RequestCriminalInfoRsp {
+	repeated UserCriminalrole Wanted =1;
+	repeated UserCriminalrole Caughted =2;
+}
+// 警察信息
+message Data {
+	// 警察id
+	int64 Id=1;
+	int64 Value = 2;
+}
+// 警察信息
+message PoliceData {
+	// 警察id
+	string Fkuuid=1;
+	int64 Fktransportid =4;
+	int64 Xaxis = 2;
+	int64 Yaxis = 3;
+	int64 Orientations = 6;
+	int64 RemainNum = 7;
+}
+message PoliceWalkInfo {
+	// 警察id
+	string Fkuuid=1;
+	// 交通工具id
+	int64 Fktransportid = 2;
+	// 基本属性
+	repeated PoliceWaydata Waydata =9;
+}
+//LinePoliceinfo 该条线上用户信息
+message LinePoliceinfo  {
+	// 警察id
+	string Fkuuid=1;
+	int64 Xaxis=2;
+	int64	Yaxis =3;
+	int64 Orientations =4;
+	//RemainNum 剩余步数
+	int64 RemainNum  =5;
+	//GiveUpReclama
+	bool GiveUpReclama =6;
+	//Fktransportid 使用的交通ID
+	int64 Fktransportid  =7;
+}
+// 增加警察或者减少警察
+message RequestPoliceOperationRes {
+	// 增加的警察
+	repeated PoliceData Incremental =1;
+	// 删除警察
+	repeated PoliceData Reduce =2;
+}
+// 警察行走
+message RequestPoliceWalkRes {
+  repeated PoliceWalkInfo data = 1;
+}
+
+message PoliceWaydata {
+	// 警察id
+	string Fkuuid = 1;
+	// 犯罪值
+	int64 Criminal=7;
+	// 犯罪星级
+	int64 Star=6;
+	int64 Xaxis = 2;
+	//Yaxis Y坐标或下标
+	int64 Yaxis = 3;
+	//Direction 行走方向
+	bool Direction = 4;
+	//Orientations 朝向
+	int64 Orientations = 5;
+	//RemainNum 剩余步数
+	int64 RemainNum =8;
+}
+// 结论
+message RequestPoliceVerifyRes {
+	// 是否被逮捕
+	bool Caughted=1;
+	// 逮捕的警察
+	string Fkuuid = 2;
+	// 警察局code 
+	int64 BuildingCode=3;
+	int64 Xaxis = 4;
+	int64 Yaxis = 5;
+	int64 Orientations =6;
+	// 拘留时间
+	int64 PunishmentTime=11;
+	// 罚款
+	Data PunishmentPrice=12;
+}
+  
+// 验证
+message  RequestPoliceVerifyReq{
+	// 这个字段,前端用不着
+	string Fkcitycode=6;
+	// 用户id
+	string Fkuuid = 1;
+	// 用户坐标
+	int64  Xaxis =2;
+	int64  Yaxis =3;
+	//Orientations 朝向
+	int64 Orientations = 5;
+	// 警察id
+	string PoliceFkuuid = 4;
+}
