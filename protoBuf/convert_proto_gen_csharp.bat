@@ -2,7 +2,7 @@
 
 set protoc_path=protoc-3.5.1\protoc
 set proto_dir=proto
-set csharp_dir=..\localServer\localServer\proto-gen-csharp
+set csharp_dir=..\localServer\SocketServer\proto-gen-csharp
 set client_dir=..\clientServerTest\Assets\Third\ProtoBuffer
 
 if exist "%client_dir%" (
@@ -25,5 +25,7 @@ for /r "%proto_dir%" %%a in (*.proto) do (
 
 @REM 复制到客户端目录
 xcopy /s /e /y "%csharp_dir%\*.*" "%client_dir%\"
+
+echo "finsh .... "
 
 pause

@@ -1,51 +1,80 @@
-using System;
-using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using UnityEngine;
 using Google.Protobuf;
 using Frame;
-using System.Net;
-using System.Text;
 using System.Collections.Generic;
-using System.Net.Http;
-using UnityEngine;
-using System.Threading.Tasks;
 
 namespace NetworkFrame
 {
-    public static class NetworkServer
+    public class NetworkServer
     {
-        public static async Task SendMessage(NetworkMessageID messageID, IMessage message)
+        #region 常量
+        static string serverIp = "192.168.3.12";
+        static int serverPort = 9131;
+        static Socket tcpSocket;
+        #endregion
+
+        public delegate void NetworkCallBack(byte[] vs);
+        static Dictionary<NetworkMessageID, NetworkCallBack> networkCallBackDic = new Dictionary<NetworkMessageID, NetworkCallBack>();
+
+
+        public static void ConnectServer() 
         {
-            Debug.LogError("发送消息");
+            Debug.Log("请求连接");
 
+            // 新建一个socket
+            tcpSocket = new Socket(AddressFamily.InterNetwork,SocketType.Stream,ProtocolType.Tcp);
+
+            // 绑定ip 端口
+            IPAddress iPAddress = IPAddress.Parse(serverIp);
+            EndPoint endPoint = new IPEndPoint(iPAddress,serverPort);
+
+            // 连接服务器
+            tcpSocket.Connect(endPoint);
+
+            // 接受服务器的消息
+            byte[] buffer = new byte[1024];
+            int messageLength = tcpSocket.Receive(buffer);
+
+            // 接受
+            ReceiveMessage(buffer);
+        }
+
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        public static void SendMessage(NetworkMessageID messageID,IMessage message) 
+        {
             HeadMessage headMessage = new HeadMessage();
-            headMessage.MessageContent = message.ToByteString();
             headMessage.MessageID = (int)messageID;
+            headMessage.MessageContent = message.ToByteString();
 
-            // 数据
-            byte[] bytes = headMessage.ToByteArray();
-            ByteArrayContent httpContent = new ByteArrayContent(bytes);
+            tcpSocket.Send(headMessage.ToByteArray());
 
-            // 创建 HttpClient 实例
-            var client = new HttpClient();
+            Debug.Log("发送消息  ");
+        }
 
-            // 发送 POST 请求
-            var response = await client.PostAsync("http://localhost:7800/", httpContent);
-
-            // 检查是否成功
-            if (response.IsSuccessStatusCode)
+        /// <summary>
+        /// 接受消息 消息分发
+        /// </summary>
+        static void ReceiveMessage(byte[] buffer) 
+        {
+            HeadMessage headMessage = (HeadMessage)HeadMessage.Descriptor.Parser.ParseFrom(buffer);
+            NetworkMessageID messageID = (NetworkMessageID)headMessage.MessageID;
+            if (networkCallBackDic.ContainsKey(messageID))
             {
-                // 获取响应内容
-                byte[] receiveBytesContent = await response.Content.ReadAsByteArrayAsync();
-                HeadMessage receiveMessage = (HeadMessage)HeadMessage.Descriptor.Parser.ParseFrom(receiveBytesContent);
-
-                RequestTestReq requestTestReq =(RequestTestReq)RequestTestReq.Descriptor.Parser.ParseFrom(receiveMessage.MessageContent);
-
-                Debug.Log($"收到服务器消息，messageContent = {requestTestReq.Content}");
+                networkCallBackDic[messageID](headMessage.MessageContent.ToByteArray());
             }
-            else
-            {
-                Debug.Log(string.Format("Failed with status code: {0}", response.StatusCode));
-            }
+        }
+
+        /// <summary>
+        /// 消息绑定
+        /// </summary>
+        public static void BindNetworkMessage(NetworkMessageID messageID, NetworkCallBack callBack) 
+        {
+            networkCallBackDic.Add(messageID, callBack);
         }
     }
 }

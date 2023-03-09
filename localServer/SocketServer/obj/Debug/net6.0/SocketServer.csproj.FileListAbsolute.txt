@@ -1,0 +1,17 @@
+D:\GITHUB\localServer\localServer\SocketServer\bin\Debug\net6.0\SocketServer.exe
+D:\GITHUB\localServer\localServer\SocketServer\bin\Debug\net6.0\SocketServer.deps.json
+D:\GITHUB\localServer\localServer\SocketServer\bin\Debug\net6.0\SocketServer.runtimeconfig.json
+D:\GITHUB\localServer\localServer\SocketServer\bin\Debug\net6.0\SocketServer.dll
+D:\GITHUB\localServer\localServer\SocketServer\bin\Debug\net6.0\ref\SocketServer.dll
+D:\GITHUB\localServer\localServer\SocketServer\bin\Debug\net6.0\SocketServer.pdb
+D:\GITHUB\localServer\localServer\SocketServer\bin\Debug\net6.0\Google.Protobuf.dll
+D:\GITHUB\localServer\localServer\SocketServer\obj\Debug\net6.0\SocketServer.csproj.AssemblyReference.cache
+D:\GITHUB\localServer\localServer\SocketServer\obj\Debug\net6.0\SocketServer.GeneratedMSBuildEditorConfig.editorconfig
+D:\GITHUB\localServer\localServer\SocketServer\obj\Debug\net6.0\SocketServer.AssemblyInfoInputs.cache
+D:\GITHUB\localServer\localServer\SocketServer\obj\Debug\net6.0\SocketServer.AssemblyInfo.cs
+D:\GITHUB\localServer\localServer\SocketServer\obj\Debug\net6.0\SocketServer.csproj.CoreCompileInputs.cache
+D:\GITHUB\localServer\localServer\SocketServer\obj\Debug\net6.0\SocketServer.csproj.CopyComplete
+D:\GITHUB\localServer\localServer\SocketServer\obj\Debug\net6.0\SocketServer.dll
+D:\GITHUB\localServer\localServer\SocketServer\obj\Debug\net6.0\ref\SocketServer.dll
+D:\GITHUB\localServer\localServer\SocketServer\obj\Debug\net6.0\SocketServer.pdb
+D:\GITHUB\localServer\localServer\SocketServer\obj\Debug\net6.0\SocketServer.genruntimeconfig.cache

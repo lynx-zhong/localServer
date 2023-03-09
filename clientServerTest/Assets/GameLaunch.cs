@@ -5,25 +5,29 @@ using Google.Protobuf;
 
 public class GameLaunch : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        NetworkServer.BindNetworkMessage(NetworkMessageID.RequestTest, BindTestCallBack);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.W))
         {
-            SendTestMessage();
+            NetworkServer.ConnectServer();
+        }
+
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            RequestTestReq requestTestReq = new RequestTestReq();
+            requestTestReq.Content = "你好服务器，第一条消息测试";
+
+            NetworkServer.SendMessage(NetworkMessageID.RequestTest, requestTestReq);
         }
     }
 
-    void SendTestMessage() 
+    void BindTestCallBack(byte[] bytes) 
     {
-        RequestTestReq requestTestReq = new RequestTestReq();
-        requestTestReq.Content = Time.realtimeSinceStartup.ToString();
-        NetworkServer.SendMessage(NetworkMessageID.RequestTest, requestTestReq);
+        RequestTestRsp requestTestRsp = (RequestTestRsp)RequestTestRsp.Parser.ParseFrom(bytes);
     }
 }

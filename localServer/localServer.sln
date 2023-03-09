@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "localServer", "localServer\localServer.csproj", "{6EFFFF90-BCD4-4F40-B027-4FE18C5B9F82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "localServer_废弃_不用http", "localServer\localServer_废弃_不用http.csproj", "{6EFFFF90-BCD4-4F40-B027-4FE18C5B9F82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketServer", "SocketServer\SocketServer.csproj", "{B2831800-DE67-4210-AF67-AE271C1647AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6EFFFF90-BCD4-4F40-B027-4FE18C5B9F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EFFFF90-BCD4-4F40-B027-4FE18C5B9F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EFFFF90-BCD4-4F40-B027-4FE18C5B9F82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2831800-DE67-4210-AF67-AE271C1647AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2831800-DE67-4210-AF67-AE271C1647AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2831800-DE67-4210-AF67-AE271C1647AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2831800-DE67-4210-AF67-AE271C1647AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
