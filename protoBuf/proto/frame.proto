@@ -1,102 +1,25 @@
-//protoc --go_out=. *.proto
 syntax="proto3"; //版本号
 
-package proto;  //包名
+package frame;  //包名
 
-
-//RequestCode 消息类型
-enum RequestCode {
-	RequestCodeZero=0;
-  RequestHeartBeat=100;//心跳
-  RequestGameManage=1000; // 执行gm指令
-	RequestCreateRole=1001; //创建角色
-	RequestUpdateRole=1002; //修改角色
-	RequestGetRole=1003; //查看角色 请求无需参数
-  ServerToClientgetRoleInfo=1004; //推送角色变更
-  RequestFindransport=1101; //查询交通工具 请求无需参数
-  RequestAddTransport=1102; //购买交通工具
-  RequestRefreshDice=1103; //刷新交通工具骰子
-  RequestMoveRole=1201; //移动
-  RequestCitylist=2001; //查询城市列表
-  RequestCityinfo=2002; //查询城市基础信息
-  RequestCityMapData=2003; //查询城市基础信息
-  RequestLineofUserPosition =2006;//该线上的其他玩家位置
-  RequestGiveUpReclamation=2013; //放弃此回合开垦
-  RequestReclamation=2014;//购买开垦地块请求
-  RequestReclamationSucc=2015;//开垦地块成功
-  RequestGoWalk=2010; //玩家行走(走一格发一格)
-  RequestWalkVerify=2020; //玩家行走(验证后推送)
-  RequestWalkVerifyErr=2021; //玩家行走错误
-  RequestWalkVerifySucc=2022; //玩家行走成功
-  RequestWalkWay=2030;//重新获取玩家路线
-  RequestAddBuilding = 3001; //新建建筑
-  RequestFindBuilding = 3002; //获取城市建筑基础信息
-  RequestGetBuilding = 3003; //获取某个建筑详细信息
-  RequestInvestBuilding = 3004; //建筑投资
-  RequestChangeBuilding = 3005; //建筑更改
-  RequestConsumeBuilding = 3006; //建筑消费
-  RequestInvestmentRankingBuilding = 3007; //查看投资排行榜
-  RequestFindBuildingWork = 3008; //查看建筑打工位
-  RequestWorkInBuilding = 3009; //建筑打工
-  RequestInitSystemBuilding = 3010; //开拓城市初始化模板中的系统建筑信息
-  RequestHospitalBuilding = 3011; // 医院
-  RequestPoliceBuilding = 3012; //警察局
-  RequestBuildingInitSucc = 3021;  //添加建筑成功
-  RequestBuildingUpgrade = 3022;  //建筑升级
-  RequestBuildingChangeType = 3023; //建筑更改类型后广播
-  RequestBuildingUserWork = 3024; //玩家打工变更广播
-
-  RequestWalletInfo = 4001; //钱包信息
-  RequestRarecInfo = 4002;//请求稀土信息
-  // 警察局信息
-  RequestCriminalInfo = 5000;//请求城市罪犯信息
-  RequestPoliceWalk = 5001;//警察行走
-  RequestPoliceVerify = 5003;//警察行走验证
-  RequestPoliceOperation = 5002;//新增减少警察
-  RequestEndOfDetention =5004;//通知拘留结束
-  //不要大于这个
-  RequestCodeMax=50000;
+// ID 定义
+enum NetworkMessageID{
+	Zero = 0;
+	RequestTest = 1;
 }
 
-// GM请求
-message RequestGameManageReq {
-  //指令
-  repeated string Command=1;
-}
-// 心跳包
-message RequestHeartBeatReq {
-  string TimeStamp=1;
-}
-// 心跳回复
-message RequestHeartBeatRsp {
-  string TimeStamp=1;
+// 发包 收包 总结构体
+message HeadMessage{
+	int32 MessageID = 1;				// 协议ID
+	bytes MessageContent = 2;			// 协议的具体内容
 }
 
-//Request 请求
-message Request {
-  int32 Code = 1;
-  bytes Data=2;
-  //客户端内部数据(不解析)
-  string ClientData = 3;
+// 测试 请求
+message RequestTestReq{
+	string content = 1;
 }
 
-
-//ResponseCode 消息类型
-enum ResponseCode {
-  ResponseCodeZero=0;
-	ResponseCodeOk=200;
-}
-
-//Response 返回值
-message Response {
-  //执行操作码
-  int32 Code = 1;
-  //运行结果消息
-  string Message=2;
-  //运行结果数据
-  bytes Data=3;
-  //运行结果code
-  int32 Resultcode = 4;
-  //客户端内部数据(不解析)
-  string ClientData = 5;
+// 测试 回包
+message RequestTestRsp{
+	string content = 1;
 }
