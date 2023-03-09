@@ -22,33 +22,8 @@ namespace localServer
         {
             Console.WriteLine("-------------->   接收客户端请求");
 
-            listener = _listener;
-            HttpListenerContext context = listener.GetContext(); // 获取请求上下文
-            HttpListenerRequest request = context.Request; // 获取请求对象
-
-            // 从客户端请求中读取数据
-            byte[] buffer;
-            using (Stream body = request.InputStream)
-            {
-                buffer = new byte[request.ContentLength64];
-                int bytesRead = 0;
-                while (bytesRead < request.ContentLength64)
-                {
-                    int bytesRemaining = (int)request.ContentLength64 - bytesRead;
-                    int bytesToRead = Math.Min(bytesRemaining, buffer.Length);
-                    int n = body.Read(buffer, bytesRead, bytesToRead);
-                    if (n == 0) break;
-                    bytesRead += n;
-                }
-                //将二进制数据转换为字符串，并输出到控制台
-            }
-
-            HeadMessage headMessage =(HeadMessage)HeadMessage.Descriptor.Parser.ParseFrom(buffer);
-            if (messageCallBack.ContainsKey((NetworkMessageID)headMessage.MessageID))
-            {
-                NetworkMessageID networkMessageID = (NetworkMessageID)headMessage.MessageID;
-                messageCallBack[networkMessageID](headMessage.MessageContent.ToByteArray());
-            }
+            
+            
         }
 
         public static void SendMessage(NetworkMessageID messageID, IMessage message)
