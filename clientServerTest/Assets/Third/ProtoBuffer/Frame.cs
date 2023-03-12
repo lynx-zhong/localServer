@@ -24,15 +24,15 @@ namespace Frame {
     static FrameReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgtmcmFtZS5wcm90bxIFZnJhbWUiOAoLSGVhZE1lc3NhZ2USEQoJTWVzc2Fn",
-            "ZUlEGAEgASgFEhYKDk1lc3NhZ2VDb250ZW50GAIgASgMIiEKDlJlcXVlc3RU",
-            "ZXN0UmVxEg8KB2NvbnRlbnQYASABKAkiIQoOUmVxdWVzdFRlc3RSc3ASDwoH",
-            "Y29udGVudBgBIAEoCSotChBOZXR3b3JrTWVzc2FnZUlEEggKBFplcm8QABIP",
-            "CgtSZXF1ZXN0VGVzdBABYgZwcm90bzM="));
+            "CgtmcmFtZS5wcm90bxIFZnJhbWUiRwoLSGVhZE1lc3NhZ2USEQoJTWVzc2Fn",
+            "ZUlEGAEgASgFEhYKDk1lc3NhZ2VDb250ZW50GAIgASgMEg0KBVRpdGxlGAMg",
+            "ASgJIiEKDlJlcXVlc3RUZXN0UmVxEg8KB2NvbnRlbnQYASABKAkiIQoOUmVx",
+            "dWVzdFRlc3RSc3ASDwoHY29udGVudBgBIAEoCSotChBOZXR3b3JrTWVzc2Fn",
+            "ZUlEEggKBFplcm8QABIPCgtSZXF1ZXN0VGVzdBABYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Frame.NetworkMessageID), }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Frame.HeadMessage), global::Frame.HeadMessage.Parser, new[]{ "MessageID", "MessageContent" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Frame.HeadMessage), global::Frame.HeadMessage.Parser, new[]{ "MessageID", "MessageContent", "Title" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Frame.RequestTestReq), global::Frame.RequestTestReq.Parser, new[]{ "Content" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Frame.RequestTestRsp), global::Frame.RequestTestRsp.Parser, new[]{ "Content" }, null, null, null)
           }));
@@ -82,6 +82,7 @@ namespace Frame {
     public HeadMessage(HeadMessage other) : this() {
       messageID_ = other.messageID_;
       messageContent_ = other.messageContent_;
+      title_ = other.title_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -118,6 +119,17 @@ namespace Frame {
       }
     }
 
+    /// <summary>Field number for the "Title" field.</summary>
+    public const int TitleFieldNumber = 3;
+    private string title_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Title {
+      get { return title_; }
+      set {
+        title_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as HeadMessage);
@@ -133,6 +145,7 @@ namespace Frame {
       }
       if (MessageID != other.MessageID) return false;
       if (MessageContent != other.MessageContent) return false;
+      if (Title != other.Title) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -141,6 +154,7 @@ namespace Frame {
       int hash = 1;
       if (MessageID != 0) hash ^= MessageID.GetHashCode();
       if (MessageContent.Length != 0) hash ^= MessageContent.GetHashCode();
+      if (Title.Length != 0) hash ^= Title.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -162,6 +176,10 @@ namespace Frame {
         output.WriteRawTag(18);
         output.WriteBytes(MessageContent);
       }
+      if (Title.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Title);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -175,6 +193,9 @@ namespace Frame {
       }
       if (MessageContent.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeBytesSize(MessageContent);
+      }
+      if (Title.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Title);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -193,6 +214,9 @@ namespace Frame {
       if (other.MessageContent.Length != 0) {
         MessageContent = other.MessageContent;
       }
+      if (other.Title.Length != 0) {
+        Title = other.Title;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -210,6 +234,10 @@ namespace Frame {
           }
           case 18: {
             MessageContent = input.ReadBytes();
+            break;
+          }
+          case 26: {
+            Title = input.ReadString();
             break;
           }
         }

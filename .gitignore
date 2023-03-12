@@ -1,8 +1,9 @@
 *.vs
 localServer/localServer/obj
 localServer/localServer/bin
-SocketServer/localServer/obj
-SocketServer/localServer/bin
+localServer/packages
+localServer/SocketServer/obj
+localServer/SocketServer/bin
 clientServerTest/Library
 clientServerTest/Logs
 clientServerTest/obj

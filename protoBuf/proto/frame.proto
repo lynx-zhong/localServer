@@ -12,6 +12,7 @@ enum NetworkMessageID{
 message HeadMessage{
 	int32 MessageID = 1;				// 协议ID
 	bytes MessageContent = 2;			// 协议的具体内容
+	string Title = 3;
 }
 
 // 测试 请求
